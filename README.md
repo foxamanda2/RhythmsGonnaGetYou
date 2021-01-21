@@ -151,8 +151,9 @@
   - var choice = PromptForString("Choice: ").ToUpper().Trim();
   - switch (choice)
 
-- Case("View")
-- var viewOptions=Print out the options for view
+- case("View")
+
+  - var viewOptions=Print out the options for view
 
   - All Bands
   - Band Albums
@@ -169,15 +170,15 @@
   - case ("Band Albums")
 
     - var bandName= Ask the band you would like to look up
-    <!-- - foreach Albums in context.Albums.Include(album => album.BandSelected))
-            {
-                Console.WriteLine($"The band {{movie.TheRatingAssociatedToTheMovieObject.Description}");
-            } -->
+      <!-- - foreach Albums in context.Albums.Include(album => album.BandSelected))
+              {
+                  Console.WriteLine($"The band {{movie.TheRatingAssociatedToTheMovieObject.Description}");
+              } -->
+      **More Specific Here**
 
   - case ("Band Contract Status")
-  - var contractStatus= Ask if they want to view Bands with signed or bands without signed"
 
-    - Create Menu
+    - var contractStatus= Ask if they want to view Bands with signed or bands without signed"
 
     - Bands with signed contracts
     - Bands without signed contracts
@@ -186,7 +187,11 @@
     - If (ContractsStatus=="Not signed)
       - Print out all bands without signed contracts.
 
+    **More Specific Here**
+
   - case ("Album release date")
+
+    **Finish Here**
 
   - default ()
   - Please enter an option
@@ -259,8 +264,8 @@
       - var letGoBand= context.Band.Where(band=> band.Name == bandToLetGo)
         - letGoBand.IsSigned=False
 
--case("Quit")
+- case("Quit")
 
 - var userChoice=True;
 
--Good Bye message
+- Good Bye message
