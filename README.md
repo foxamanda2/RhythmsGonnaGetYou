@@ -241,3 +241,26 @@
     context.Song.Add(newSong);
 
     context.SaveChanges();
+
+- case ("Change Contract")
+- var contractOptions= Store which option the user picks
+
+  - Resign a band
+  - Let a band go
+
+  - if (contractOptions=="Resign a band")
+
+    - var bandToResign= Ask which band you want to resign
+    - var resignBand= context.Band.Where(band=> band.Name == bandToResign)
+      - resignBand.IsSigned=True
+
+  - if (" Let a band go")
+    - var bandToLetGo= Ask which band you want to let go
+      - var letGoBand= context.Band.Where(band=> band.Name == bandToLetGo)
+        - letGoBand.IsSigned=False
+
+-case("Quit")
+
+- var userChoice=True;
+
+-Good Bye message
