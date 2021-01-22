@@ -67,7 +67,7 @@ namespace RhythmsGonnaGetYou
                                 Console.Write("What band are you looking for?");
                                 var bandChoice = Console.ReadLine().Trim();
 
-                                foreach (var album in context.Albums.Include(band => band.BandSelected.Name == bandChoice))
+                                foreach (var album in context.Albums.Where(band => band.BandSelected.Name == bandChoice))
                                 {
                                     Console.WriteLine($"The albums for {bandChoice} are {album.Title}");
 
@@ -78,15 +78,34 @@ namespace RhythmsGonnaGetYou
 
                     case "current clients":
 
-                        // -var bandToResign = Ask which band you want to resign
-                        //  -var resignBand = context.Band.FirstOrDefault(band => band.Name == bandToResign)
-                        //  - if (resignBand == Null)
-                        //    -Sorry no band found
-                        //      - Else
-                        //   - resignBand.IsSigned = True
+                        Console.Write($"Would you like to see signed bands or not signed?");
+
+                        var contractStatus = Console.ReadLine().ToLower().Trim();
+
+                        if (contractStatus == "signed")
+                        {
+                            Console.WriteLine("\n");
+                            Console.WriteLine("Signed Bands:");
+                            foreach (var signed in context.Bands.Where(band => band.IsSigned == true))
+                            {
+                                Console.WriteLine(signed.Name);
+                            }
+                        }
+                        if (contractStatus == "not signed")
+                        {
+                            Console.WriteLine("\n");
+                            Console.WriteLine("Not Signed Bands:");
+                            foreach (var notSigned in context.Bands.Where(band => band.IsSigned == false))
+                            {
+                                Console.WriteLine(notSigned.Name);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("I am sorry, your enter is invalid");
+                        }
+
                         break;
-
-
 
                     case "change contract":
 
