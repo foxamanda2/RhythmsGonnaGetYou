@@ -107,6 +107,71 @@ namespace RhythmsGonnaGetYou
 
                         break;
 
+                    case "add":
+
+                        Console.WriteLine("\n");
+                        Console.WriteLine("Add Menu:");
+                        Console.WriteLine("Add Album to a Band");
+                        Console.WriteLine("Add song to a Album");
+                        Console.WriteLine("\n");
+
+                        var addOptions = Console.ReadLine().ToLower().Trim();
+
+
+                        if (addOptions == "add album to a band")
+                        {
+                            Console.Write("Which band would you like to add to?");
+                            var bandName = Console.ReadLine().Trim();
+                            var bandPicked = context.Bands.FirstOrDefault(band => band.Name == bandName);
+
+                            Console.Write("What is the title of the album? ");
+                            var newTitle = Console.ReadLine();
+
+                            Console.Write("Is the album Explicit? ");
+                            var newIsExplicit = bool.Parse(Console.ReadLine());
+
+                            Console.Write("What is the release date of the Album? ");
+                            var newReleaseDate = DateTime.Parse(Console.ReadLine());
+
+                            var newAlbum = new Album()
+
+                            {
+
+                                Title = newTitle,
+                                IsExplicit = newIsExplicit,
+                                ReleaseDate = newReleaseDate,
+                                BandId = bandPicked.Id
+                            };
+
+                            context.Albums.Add(newAlbum);
+
+                            context.SaveChanges();
+                        }
+
+                        if (addOptions == "add a song to a album")
+                        {
+                            Console.Write("Which album would you like to add to?");
+                            var album = Console.ReadLine().Trim();
+                            var albumPicked = context.Albums.FirstOrDefault(album => album.Title == "album");
+
+                            Console.Write("What is the track of the song you would like to add? ");
+                            var newTrack = int.Parse(Console.ReadLine());
+
+                            Console.Write("What the title of the song? ");
+                            var newTitle = Console.ReadLine();
+
+                            Console.Write("How long is the song? ");
+                            var newDuration = int.Parse(Console.ReadLine());
+
+
+
+
+
+
+                        }
+
+                        break;
+
                     case "change contract":
 
                         Console.WriteLine("\n");
