@@ -10,8 +10,10 @@ namespace RhythmsGonnaGetYou
         {
             var context = new RhythmsGonnaGetYouContext();
 
-            var bandCount = context.Albums.Count();
-            Console.WriteLine($"There are {bandCount} movies!");
+            foreach (var band in context.Band)
+            {
+                Console.WriteLine($"There is a movie named {band.Name}");
+            }
         }
     }
 }
