@@ -9,7 +9,7 @@ namespace RhythmsGonnaGetYou
 
         public string Title { get; set; }
 
-        public Decimal Duration { get; set; }
+        public int Duration { get; set; }
 
         public int AlbumId { get; set; }
 

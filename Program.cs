@@ -151,8 +151,8 @@ namespace RhythmsGonnaGetYou
                         if (addOptions == "add song to a album")
                         {
                             Console.Write("Which album would you like to add to?");
-                            var album = Console.ReadLine().Trim();
-                            var albumPicked = context.Albums.FirstOrDefault(album => album.Title == "album");
+                            var albumName = Console.ReadLine().Trim();
+                            var albumPicked = context.Albums.FirstOrDefault(album => album.Title == albumName);
 
                             Console.Write("What is the track of the song you would like to add? ");
                             var newTrackNumber = int.Parse(Console.ReadLine());
@@ -161,12 +161,11 @@ namespace RhythmsGonnaGetYou
                             var newTitle = Console.ReadLine();
 
                             Console.Write("How long is the song? ");
-                            var newDuration = Decimal.Parse(Console.ReadLine());
+                            var newDuration = int.Parse(Console.ReadLine());
 
                             var newSong = new Song()
 
                             {
-
                                 Title = newTitle,
                                 TrackNumber = newTrackNumber,
                                 Duration = newDuration,
@@ -230,9 +229,16 @@ namespace RhythmsGonnaGetYou
 
                         break;
 
+                    case "quit":
+                        userChoice = true;
+
+                        break;
+
+
 
 
                 }
+                Console.WriteLine("Thank you for visiting Rhythms Gonna Get You Records");
 
             }
         }
