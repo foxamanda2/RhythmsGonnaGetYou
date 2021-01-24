@@ -10,7 +10,7 @@ namespace RhythmsGonnaGetYou
 
         public DbSet<Song> Songs { get; set; }
 
-        public DbSet<BandMember> BandMember { get; set; }
+        public DbSet<BandMembers> BandMembers { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

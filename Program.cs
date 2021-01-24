@@ -10,12 +10,9 @@ namespace RhythmsGonnaGetYou
         {
             var context = new RhythmsGonnaGetYouContext();
 
-            var albumCount = context.Albums.Count();
-            Console.WriteLine($"There are {albumCount} albums!");
-
-            // CODE STARTS HERE
-
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Welcome to Rhythms Gonna Get You Records Database:");
+            Console.WriteLine("--------------------------------------------");
 
             var userChoice = false;
 
@@ -66,43 +63,52 @@ namespace RhythmsGonnaGetYou
 
 
                             case "band albums":
-                                Console.Write("What band are you looking for?");
+                                Console.Write("What band are you looking for?\n");
                                 var bandChoice = Console.ReadLine().Trim();
 
+                                Console.WriteLine($"\nThe Albums in {bandChoice} are:");
                                 foreach (var album in context.Albums.Where(band => band.BandSelected.Name == bandChoice))
                                 {
-                                    Console.WriteLine($"The albums for {bandChoice} are {album.Title}");
+                                    Console.WriteLine(album.Title);
 
                                 }
                                 break;
                             case "albums in genre":
-                                Console.Write("What genre are you looking for?");
+                                Console.Write("What genre are you looking for?\n");
                                 var genreChoice = Console.ReadLine().Trim().ToLower();
 
-                                foreach (var album in context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice))
-                                {
-                                    Console.WriteLine($"The albums for {genreChoice} are {album.Title}");
+                                var albumsInGenre = context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice);
 
+                                if (albumsInGenre != null)
+                                {
+                                    Console.WriteLine($"\nThe Albums in {genreChoice} are:");
+                                    foreach (var album in context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice))
+                                    {
+                                        Console.WriteLine(album.Title);
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    Console.WriteLine($"I am sorry we dont have any albums in the genre {genreChoice}");
+                                }
+
+                                break;
+                            case "members in band":
+                                Console.Write("What band are you looking for?");
+                                var bandNameChoice = Console.ReadLine().Trim();
+
+
+                                Console.WriteLine($"\nThe members in {bandNameChoice} are:\n");
+                                foreach (var band in context.Bands.Where(band => band.Name == bandNameChoice).Include(band => band.BandMembers).ThenInclude(name => name.Musician))
+                                {
+                                    foreach (var musician in band.BandMembers)
+                                    {
+                                        Console.WriteLine($"{musician.Musician.FullName}");
+                                    }
                                 }
                                 break;
-                                // case "members in band":
-                                //     Console.Write("What band are you looking for?");
-                                //     var bandNameChoice = Console.ReadLine().Trim();
-                                //     foreach (var band in context.Bands.Include(band => band.Name == bandNameChoice).ThenInclude(bandmember => bandmember.TheMusicians))
-                                //     {
-                                //         Console.WriteLine($"The movie {movie.Title}");
-
-                                //         foreach (var role in movie.Roles)
-                                //         {
-                                //             Console.WriteLine($"- {role.CharacterName} played by {role.TheAssociatedActor.FullName}");
-                                //         }
-                                //     }
-
-
-
-                                //     break;
-
-
                         }
                         break;
 
@@ -271,7 +277,9 @@ namespace RhythmsGonnaGetYou
 
 
             }
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Thank you for visiting Rhythms Gonna Get You Records");
+            Console.WriteLine("--------------------------------------------");
         }
     }
 }

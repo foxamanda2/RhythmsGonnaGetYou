@@ -22,10 +22,7 @@ namespace RhythmsGonnaGetYou
 
         public string ContactPhoneNumber { get; set; }
 
-        public List<BandMember> BandMembers { get; set; }
-
-
-
+        public List<BandMembers> BandMembers { get; set; }
 
     }
 }

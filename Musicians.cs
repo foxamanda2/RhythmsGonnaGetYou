@@ -6,9 +6,7 @@ namespace RhythmsGonnaGetYou
     {
         public int Id { get; set; }
         public string FullName { get; set; }
-        public List<BandMember> BandMember { get; set; }
-
-
+        public List<BandMembers> BandMembers { get; set; }
 
     }
 }
