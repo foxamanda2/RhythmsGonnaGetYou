@@ -137,10 +137,6 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine(notSigned.Name);
                             }
                         }
-                        // else
-                        // {
-                        //     Console.WriteLine("I am sorry, your enter is invalid");
-                        // }
 
                         break;
 
