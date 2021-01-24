@@ -43,6 +43,8 @@ namespace RhythmsGonnaGetYou
                         Console.WriteLine("All Bands");
                         Console.WriteLine("All Albums");
                         Console.WriteLine("Band Albums");
+                        Console.WriteLine("Albums In Genre");
+                        Console.WriteLine("Members in Band");
                         Console.WriteLine("\n");
 
                         var viewChoice = Console.ReadLine().ToLower().Trim();
@@ -73,6 +75,34 @@ namespace RhythmsGonnaGetYou
 
                                 }
                                 break;
+                            case "albums in genre":
+                                Console.Write("What genre are you looking for?");
+                                var genreChoice = Console.ReadLine().Trim().ToLower();
+
+                                foreach (var album in context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice))
+                                {
+                                    Console.WriteLine($"The albums for {genreChoice} are {album.Title}");
+
+                                }
+                                break;
+                                // case "members in band":
+                                //     Console.Write("What band are you looking for?");
+                                //     var bandNameChoice = Console.ReadLine().Trim();
+                                //     foreach (var band in context.Bands.Include(band => band.Name == bandNameChoice).ThenInclude(bandmember => bandmember.TheMusicians))
+                                //     {
+                                //         Console.WriteLine($"The movie {movie.Title}");
+
+                                //         foreach (var role in movie.Roles)
+                                //         {
+                                //             Console.WriteLine($"- {role.CharacterName} played by {role.TheAssociatedActor.FullName}");
+                                //         }
+                                //     }
+
+
+
+                                //     break;
+
+
                         }
                         break;
 
@@ -238,9 +268,10 @@ namespace RhythmsGonnaGetYou
 
 
                 }
-                Console.WriteLine("Thank you for visiting Rhythms Gonna Get You Records");
+
 
             }
+            Console.WriteLine("Thank you for visiting Rhythms Gonna Get You Records");
         }
     }
 }
