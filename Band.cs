@@ -22,6 +22,10 @@ namespace RhythmsGonnaGetYou
 
         public string ContactPhoneNumber { get; set; }
 
+        public List<BandMember> BandMembers { get; set; }
+
+
+
 
     }
 }
