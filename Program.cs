@@ -64,10 +64,10 @@ namespace RhythmsGonnaGetYou
 
                             case "band albums":
                                 Console.Write("What band are you looking for?\n");
-                                var bandChoice = Console.ReadLine().Trim();
+                                var bandChoice = Console.ReadLine().Trim().ToLower();
 
                                 Console.WriteLine($"\nThe Albums in {bandChoice} are:");
-                                foreach (var album in context.Albums.Where(band => band.BandSelected.Name == bandChoice))
+                                foreach (var album in context.Albums.Where(band => band.BandSelected.Name.ToLower() == bandChoice))
                                 {
                                     Console.WriteLine(album.Title);
 
@@ -87,9 +87,10 @@ namespace RhythmsGonnaGetYou
                                         Console.WriteLine(album.Title);
 
                                     }
+
                                 }
 
-                                else
+                                if (albumsInGenre == null)
                                 {
                                     Console.WriteLine($"I am sorry we dont have any albums in the genre {genreChoice}");
                                 }
@@ -136,10 +137,10 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine(notSigned.Name);
                             }
                         }
-                        else
-                        {
-                            Console.WriteLine("I am sorry, your enter is invalid");
-                        }
+                        // else
+                        // {
+                        //     Console.WriteLine("I am sorry, your enter is invalid");
+                        // }
 
                         break;
 
@@ -147,18 +148,63 @@ namespace RhythmsGonnaGetYou
 
                         Console.WriteLine("\n");
                         Console.WriteLine("Add Menu:");
+                        Console.WriteLine("Add a new Band");
                         Console.WriteLine("Add Album to a Band");
                         Console.WriteLine("Add song to a Album");
                         Console.WriteLine("\n");
 
                         var addOptions = Console.ReadLine().ToLower().Trim();
 
+                        if (addOptions == "add a new band")
+                        {
+                            Console.WriteLine("What is the name of your new band?");
+                            var newBandName = Console.ReadLine();
+
+                            Console.WriteLine("What is the Country of Origin? ");
+                            var newCountry = Console.ReadLine();
+
+                            Console.WriteLine("How many members are in the group? ");
+                            var newMemberNum = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("What is the website of your band? ");
+                            var newWebsite = Console.ReadLine();
+
+                            Console.WriteLine("What style is your band? ");
+                            var newStyle = Console.ReadLine();
+
+                            Console.WriteLine("Is your band signed (true or false)? ");
+                            var newSigned = bool.Parse(Console.ReadLine());
+
+                            Console.WriteLine("What is the contact name for your band? ");
+                            var newContact = Console.ReadLine();
+
+                            Console.WriteLine("What is the contact phone number? ");
+                            var newPhone = Console.ReadLine();
+
+                            var newBand = new Band()
+
+                            {
+                                Name = newBandName,
+                                CountryOfOrigin = newCountry,
+                                NumberOfMembers = newMemberNum,
+                                Website = newWebsite,
+                                Style = newStyle,
+                                IsSigned = newSigned,
+                                ContactName = newContact,
+                                ContactPhoneNumber = newPhone
+                            };
+
+                            context.Bands.Add(newBand);
+
+                            context.SaveChanges();
+                        }
+
 
                         if (addOptions == "add album to a band")
                         {
                             Console.Write("Which band would you like to add to?");
-                            var bandName = Console.ReadLine().Trim();
-                            var bandPicked = context.Bands.FirstOrDefault(band => band.Name == bandName);
+                            var bandName = Console.ReadLine().Trim().ToLower();
+                            var bandPicked = context.Bands.FirstOrDefault(band => band.Name.ToLower() == bandName);
 
                             Console.Write("What is the title of the album? ");
                             var newTitle = Console.ReadLine();
