@@ -6,13 +6,23 @@ namespace RhythmsGonnaGetYou
 {
     class Program
     {
+        public static void Greeting(string message)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine(message);
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        public static string ReadInput(string message)
+        {
+            Console.Write(message);
+            var input = Console.ReadLine().ToLower().Trim();
+            return input;
+        }
         static void Main(string[] args)
         {
             var context = new RhythmsGonnaGetYouContext();
-
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Welcome to Rhythms Gonna Get You Records Database:");
-            Console.WriteLine("--------------------------------------------");
+            Greeting("Welcome to Rhythms Gonna Get You Records Database:");
 
             var userChoice = false;
 
@@ -28,6 +38,7 @@ namespace RhythmsGonnaGetYou
                 Console.WriteLine("Change Contract");
                 Console.WriteLine("Quit");
                 Console.WriteLine("\n");
+                Console.WriteLine("Which choice would you like? \n");
 
                 var menuChoice = Console.ReadLine().ToLower().Trim();
 
@@ -63,8 +74,8 @@ namespace RhythmsGonnaGetYou
 
 
                             case "band albums":
-                                Console.Write("What band are you looking for?\n");
-                                var bandChoice = Console.ReadLine().Trim().ToLower();
+                                var bandChoice = ReadInput("What band are you looking for?\n");
+
 
                                 Console.WriteLine($"\nThe Albums in {bandChoice} are:");
                                 foreach (var album in context.Albums.Where(band => band.BandSelected.Name.ToLower() == bandChoice))
@@ -74,8 +85,7 @@ namespace RhythmsGonnaGetYou
                                 }
                                 break;
                             case "albums in genre":
-                                Console.Write("What genre are you looking for?\n");
-                                var genreChoice = Console.ReadLine().Trim().ToLower();
+                                var genreChoice = ReadInput("What genre are you looking for?\n");
 
                                 var albumsInGenre = context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice);
 
@@ -97,12 +107,11 @@ namespace RhythmsGonnaGetYou
 
                                 break;
                             case "members in band":
-                                Console.Write("What band are you looking for?");
-                                var bandNameChoice = Console.ReadLine().Trim();
+                                var bandNameChoice = ReadInput("What band are you looking for?");
 
 
                                 Console.WriteLine($"\nThe members in {bandNameChoice} are:\n");
-                                foreach (var band in context.Bands.Where(band => band.Name == bandNameChoice).Include(band => band.BandMembers).ThenInclude(name => name.Musician))
+                                foreach (var band in context.Bands.Where(band => band.Name.ToLower() == bandNameChoice).Include(band => band.BandMembers).ThenInclude(name => name.Musician))
                                 {
                                     foreach (var musician in band.BandMembers)
                                     {
@@ -114,10 +123,7 @@ namespace RhythmsGonnaGetYou
                         break;
 
                     case "current clients":
-
-                        Console.Write($"Would you like to see signed bands or not signed?");
-
-                        var contractStatus = Console.ReadLine().ToLower().Trim();
+                        var contractStatus = ReadInput("Would you like to see signed bands or not signed?");
 
                         if (contractStatus == "signed")
                         {
@@ -137,6 +143,10 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine(notSigned.Name);
                             }
                         }
+                        // else
+                        // {
+                        //     Console.WriteLine("I am sorry, your enter is invalid");
+                        // }
 
                         break;
 
@@ -153,29 +163,21 @@ namespace RhythmsGonnaGetYou
 
                         if (addOptions == "add a new band")
                         {
-                            Console.WriteLine("What is the name of your new band?");
-                            var newBandName = Console.ReadLine();
+                            var newBandName = ReadInput("What is the name of your new band?");
 
-                            Console.WriteLine("What is the Country of Origin? ");
-                            var newCountry = Console.ReadLine();
+                            var newCountry = ReadInput("What is the Country of Origin? ");
 
-                            Console.WriteLine("How many members are in the group? ");
-                            var newMemberNum = int.Parse(Console.ReadLine());
+                            var newMemberNum = int.Parse(ReadInput("How many members are in the group? "));
 
-                            Console.WriteLine("What is the website of your band? ");
-                            var newWebsite = Console.ReadLine();
+                            var newWebsite = ReadInput("What is the website of your band? ");
 
-                            Console.WriteLine("What style is your band? ");
-                            var newStyle = Console.ReadLine();
+                            var newStyle = ReadInput("What style is your band? ");
 
-                            Console.WriteLine("Is your band signed (true or false)? ");
-                            var newSigned = bool.Parse(Console.ReadLine());
+                            var newSigned = bool.Parse(ReadInput("Is your band signed (true or false)? "));
 
-                            Console.WriteLine("What is the contact name for your band? ");
-                            var newContact = Console.ReadLine();
+                            var newContact = ReadInput("What is the contact name for your band? ");
 
-                            Console.WriteLine("What is the contact phone number? ");
-                            var newPhone = Console.ReadLine();
+                            var newPhone = ReadInput("What is the contact phone number? ");
 
                             var newBand = new Band()
 
@@ -198,18 +200,14 @@ namespace RhythmsGonnaGetYou
 
                         if (addOptions == "add album to a band")
                         {
-                            Console.Write("Which band would you like to add to?");
-                            var bandName = Console.ReadLine().Trim().ToLower();
+                            var bandName = ReadInput("Which band would you like to add to? ");
                             var bandPicked = context.Bands.FirstOrDefault(band => band.Name.ToLower() == bandName);
 
-                            Console.Write("What is the title of the album? ");
-                            var newTitle = Console.ReadLine();
+                            var newTitle = ReadInput("What is the title of the album? ");
 
-                            Console.Write("Is the album Explicit? ");
-                            var newIsExplicit = bool.Parse(Console.ReadLine());
+                            var newIsExplicit = bool.Parse(ReadInput("Is the album Explicit ? "));
 
-                            Console.Write("What is the release date of the Album? ");
-                            var newReleaseDate = DateTime.Parse(Console.ReadLine());
+                            var newReleaseDate = DateTime.Parse(ReadInput("What is the release date of the Album? "));
 
                             var newAlbum = new Album()
 
@@ -228,18 +226,14 @@ namespace RhythmsGonnaGetYou
 
                         if (addOptions == "add song to a album")
                         {
-                            Console.Write("Which album would you like to add to?");
-                            var albumName = Console.ReadLine().Trim();
-                            var albumPicked = context.Albums.FirstOrDefault(album => album.Title == albumName);
+                            var albumName = ReadInput("Which album would you like to add to? ");
+                            var albumPicked = context.Albums.FirstOrDefault(album => album.Title.ToLower() == albumName);
 
-                            Console.Write("What is the track of the song you would like to add? ");
-                            var newTrackNumber = int.Parse(Console.ReadLine());
+                            var newTrackNumber = int.Parse(ReadInput("What is the track of the song you would like to add? "));
 
-                            Console.Write("What the title of the song? ");
-                            var newTitle = Console.ReadLine();
+                            var newTitle = ReadInput("What the title of the song? ");
 
-                            Console.Write("How long is the song? ");
-                            var newDuration = int.Parse(Console.ReadLine());
+                            var newDuration = int.Parse(ReadInput("How long is the song? "));
 
                             var newSong = new Song()
 
@@ -270,9 +264,7 @@ namespace RhythmsGonnaGetYou
 
                         if (contractOptions == "resign a band")
                         {
-                            Console.Write("Which band do you want to resign?");
-
-                            var bandToResign = Console.ReadLine().ToLower().Trim();
+                            var bandToResign = ReadInput("Which band do you want to resign? ");
 
                             var resignBand = context.Bands.FirstOrDefault(band => band.Name.ToLower() == bandToResign);
                             if (resignBand != null)
@@ -288,9 +280,7 @@ namespace RhythmsGonnaGetYou
 
                         if (contractOptions == "let a band go")
                         {
-                            Console.Write("Which band do you want to let go?");
-
-                            var bandToLetGo = Console.ReadLine().ToLower().Trim();
+                            var bandToLetGo = ReadInput("Which band do you want to let go?");
 
                             var letGoBand = context.Bands.FirstOrDefault(band => band.Name.ToLower() == bandToLetGo);
                             if (letGoBand != null)
@@ -319,9 +309,7 @@ namespace RhythmsGonnaGetYou
 
 
             }
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Thank you for visiting Rhythms Gonna Get You Records");
-            Console.WriteLine("--------------------------------------------");
+            Greeting("Thank you for visiting Rhythms Gonna Get You Records");
         }
     }
 }
