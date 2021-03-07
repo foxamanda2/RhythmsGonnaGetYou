@@ -28,7 +28,6 @@ namespace RhythmsGonnaGetYou
 
             while (userChoice == false)
             {
-
                 Console.WriteLine("\n");
                 Console.WriteLine("Menu Options:");
                 Console.WriteLine("\n");
@@ -72,10 +71,8 @@ namespace RhythmsGonnaGetYou
                                 }
                                 break;
 
-
                             case "band albums":
                                 var bandChoice = ReadInput("What band are you looking for?\n");
-
 
                                 Console.WriteLine($"\nThe Albums in {bandChoice} are:");
                                 foreach (var album in context.Albums.Where(band => band.BandSelected.Name.ToLower() == bandChoice))
@@ -88,22 +85,19 @@ namespace RhythmsGonnaGetYou
                                 var genreChoice = ReadInput("What genre are you looking for?\n");
 
                                 var albumsInGenre = context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice);
-
                                 if (albumsInGenre != null)
                                 {
                                     Console.WriteLine($"\nThe Albums in {genreChoice} are:");
-                                    foreach (var album in context.Albums.Where(genre => genre.BandSelected.Style.ToLower() == genreChoice))
+                                    foreach (var album in albumsInGenre)
                                     {
                                         Console.WriteLine(album.Title);
 
                                     }
-
                                 }
-
-                                if (albumsInGenre == null)
-                                {
-                                    Console.WriteLine($"I am sorry we dont have any albums in the genre {genreChoice}");
-                                }
+                                // if (albumsInGenre == null)
+                                // {
+                                //     Console.WriteLine($"I am sorry we dont have any albums in the genre {genreChoice}");
+                                // }
 
                                 break;
                             case "members in band":
@@ -134,7 +128,7 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine(signed.Name);
                             }
                         }
-                        if (contractStatus == "not signed")
+                        else if (contractStatus == "not signed")
                         {
                             Console.WriteLine("\n");
                             Console.WriteLine("Not Signed Bands:");
@@ -143,10 +137,10 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine(notSigned.Name);
                             }
                         }
-                        // else
-                        // {
-                        //     Console.WriteLine("I am sorry, your enter is invalid");
-                        // }
+                        else
+                        {
+                            Console.WriteLine("I am sorry, your enter is invalid");
+                        }
 
                         break;
 
@@ -196,7 +190,6 @@ namespace RhythmsGonnaGetYou
 
                             context.SaveChanges();
                         }
-
 
                         if (addOptions == "add album to a band")
                         {
@@ -292,7 +285,6 @@ namespace RhythmsGonnaGetYou
                             {
                                 Console.WriteLine("Sorry your band name was not found");
                             }
-
                         }
 
                         break;
@@ -301,13 +293,7 @@ namespace RhythmsGonnaGetYou
                         userChoice = true;
 
                         break;
-
-
-
-
                 }
-
-
             }
             Greeting("Thank you for visiting Rhythms Gonna Get You Records");
         }
